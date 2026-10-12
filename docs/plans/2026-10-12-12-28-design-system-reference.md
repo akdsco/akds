@@ -232,6 +232,17 @@ Then `/ship`.
 
 ## Notes
 
+- **Value readout: build-time oklch from source, not runtime getComputedStyle
+  (changed during increment 6's browser verification).** The live
+  `getComputedStyle` read returned `lab(…)` — the production build's Lightning CSS
+  transpiles the authored `oklch(…)` into a `lab()` fallback. That is the real
+  computed value but not the notation `app/theme.css` (or a builder) uses, so it's
+  worse for AC#5. Switched to `lib/theme-css.ts`, which parses the authored oklch
+  values for both light + dark straight out of `app/theme.css` at build time —
+  still a true non-drift mirror (a rebuild reflects the file), more useful, and
+  fully unit-testable (dropped the client component + hydration gate). Swatches
+  still paint from the live `var(--…)`, so the colour shown is the active theme's
+  real colour. Verified in a real browser in both modes.
 - Design-intent context (not the rendered source): `docs/design-brief.md` +
   `docs/design-artifacts/v1-design-akds-portfolio-2026.zip` (Claude Design v1,
   Jul 2026). Used only to frame the reference's narrative (semantic roles,
