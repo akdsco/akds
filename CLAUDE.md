@@ -116,7 +116,8 @@ deferred follow-up, not built here.
 ```
 app/             # App Router routes & layout
 components/      # Shared components (SiteNav, ThemeProvider, ModeToggle, icons)
-components/ui/   # shadcn primitives (button, card, …)
+components/ui/   # shadcn primitives (currently empty — the scaffolded button/card
+                 #   went unused and were removed; re-add via `npx shadcn add` if needed)
 lib/             # Utilities (cn helper, scroll-into-view-live)
 data/            # portfolio.ts — typed content (Project, skills, experience, testimonials…)
 ```
