@@ -28,17 +28,17 @@ export const designTokens: DesignToken[] = [
   { name: "hi-soft", role: "translucent hi (glows / focus rings)" },
 ];
 
-/** The radius scale from globals.css (`--radius-*`, derived from `--radius`).
+/** The radius-scale steps the site actually uses (`--radius-*` from globals.css).
  * Rendered live via the Tailwind `rounded-*` utilities, so the curve shown is
- * the real one. Full literal class names so Tailwind's scanner keeps them. */
+ * the real one. Full literal class names so Tailwind's scanner keeps them.
+ * `rounded-2xl`/`3xl`/`4xl` are defined in the scale but unused on the site, so
+ * they're omitted — see the note on the Radius section about bespoke pixel
+ * radii, which is what the site mostly reaches for. */
 export const radiusSteps = [
   { label: "sm", className: "rounded-sm" },
   { label: "md", className: "rounded-md" },
   { label: "lg", className: "rounded-lg" },
   { label: "xl", className: "rounded-xl" },
-  { label: "2xl", className: "rounded-2xl" },
-  { label: "3xl", className: "rounded-3xl" },
-  { label: "4xl", className: "rounded-4xl" },
 ] as const;
 
 /** The type sizes the site actually uses, largest first. Rendered in Geist Sans
@@ -54,9 +54,10 @@ export const typeSamples = [
   { className: "text-xs", label: "text-xs" },
 ] as const;
 
-/** A representative slice of Tailwind's spacing scale (the gaps/paddings the
- * site reaches for). Rendered live as bars via literal `w-*` utilities. These
- * are curated samples of the default scale, not an enumerated token set. */
+/** The Tailwind spacing steps the site actually uses for gaps/paddings (verified
+ * against real usage — `16` is unused and omitted). Rendered live as bars via
+ * literal `w-*` utilities. These are the default Tailwind scale, not a bespoke
+ * token set. */
 export const spacingSteps = [
   { label: "1", className: "w-1" },
   { label: "2", className: "w-2" },
@@ -65,5 +66,4 @@ export const spacingSteps = [
   { label: "6", className: "w-6" },
   { label: "8", className: "w-8" },
   { label: "12", className: "w-12" },
-  { label: "16", className: "w-16" },
 ] as const;

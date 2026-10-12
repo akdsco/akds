@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
 
 import { RadiusScale, SpacingScale, TypeScale } from "@/components/ds/scales";
@@ -23,8 +23,11 @@ describe("scale sections", () => {
 
   test("RadiusScale renders every radius step", () => {
     render(<RadiusScale />);
+    // Scope to the swatch list: the explanatory note below also mentions some
+    // rounded-* class names, so a bare getByText would find two.
+    const list = within(screen.getByRole("list"));
     for (const r of radiusSteps) {
-      expect(screen.getByText(r.className)).toBeInTheDocument();
+      expect(list.getByText(r.className)).toBeInTheDocument();
     }
   });
 

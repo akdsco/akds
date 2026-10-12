@@ -20,23 +20,17 @@ export function TypeScale() {
           </li>
         ))}
       </ul>
-      <dl className="border-line grid gap-3 border-t pt-6 sm:grid-cols-3">
+      <dl className="border-line grid gap-3 border-t pt-6 sm:grid-cols-2">
         <div>
           <dt className="text-ink font-sans text-base">Geist Sans</dt>
           <dd className="text-dim font-mono text-[11px]">
-            font-sans · body + headings
+            font-sans · body + headings (default; headings add font-semibold)
           </dd>
         </div>
         <div>
           <dt className="text-ink font-mono text-base">Geist Mono</dt>
           <dd className="text-dim font-mono text-[11px]">
             font-mono · labels, chips, metadata
-          </dd>
-        </div>
-        <div>
-          <dt className="text-ink font-heading text-base">Heading</dt>
-          <dd className="text-dim font-mono text-[11px]">
-            font-heading · aliases sans
           </dd>
         </div>
       </dl>
@@ -46,19 +40,28 @@ export function TypeScale() {
 
 export function RadiusScale() {
   return (
-    <ul role="list" className="flex flex-wrap items-end gap-6">
-      {radiusSteps.map((r) => (
-        <li key={r.className} className="flex flex-col items-center gap-2">
-          <span
-            aria-hidden
-            className={`border-line bg-chip size-14 border ${r.className}`}
-          />
-          <code className="text-faint font-mono text-[11px]">
-            {r.className}
-          </code>
-        </li>
-      ))}
-    </ul>
+    <div className="space-y-4">
+      <ul role="list" className="flex flex-wrap items-end gap-6">
+        {radiusSteps.map((r) => (
+          <li key={r.className} className="flex flex-col items-center gap-2">
+            <span
+              aria-hidden
+              className={`border-line bg-chip size-14 border ${r.className}`}
+            />
+            <code className="text-faint font-mono text-[11px]">
+              {r.className}
+            </code>
+          </li>
+        ))}
+      </ul>
+      <p className="text-faint text-xs">
+        Only the scale steps the site uses are shown. In practice most surfaces
+        reach for a specific pixel radius instead: chips{" "}
+        <code className="font-mono">rounded-[5px]</code>, cards{" "}
+        <code className="font-mono">rounded-[11px]</code>, buttons{" "}
+        <code className="font-mono">rounded-lg</code>.
+      </p>
+    </div>
   );
 }
 
