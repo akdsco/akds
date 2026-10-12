@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { usePalette } from "@/components/command-palette";
-import { SocialIconLink } from "@/components/social-icon-link";
 import { ModeToggle } from "@/components/mode-toggle";
+import { SocialIconLink } from "@/components/social-icon-link";
 import { Wordmark } from "@/components/wordmark";
 import { publicSocials } from "@/data/portfolio";
 import { useDwellFlare } from "@/lib/use-dwell-flare";
