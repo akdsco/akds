@@ -6,8 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { usePalette } from "@/components/command-palette";
-import { ExternalLink } from "@/components/external-link";
-import { GithubIcon, LinkedinIcon } from "@/components/icons";
+import { SocialIconLink } from "@/components/social-icon-link";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Wordmark } from "@/components/wordmark";
 import { publicSocials } from "@/data/portfolio";
@@ -85,14 +84,6 @@ function useScrollingDown() {
 
   return down;
 }
-
-// Nav shows only GitHub + LinkedIn (the no-contact rule) — the same surfaced
-// set as the `sameAs` structured data, sourced from `publicSocials` so they
-// can't drift.
-const navSocials = publicSocials.map((s) => ({
-  ...s,
-  Icon: s.label === "GitHub" ? GithubIcon : LinkedinIcon,
-}));
 
 export function SiteNav() {
   const pathname = usePathname();
@@ -212,15 +203,8 @@ export function SiteNav() {
           </button>
 
           <div className="hidden items-center gap-0.5 min-[500px]:flex">
-            {navSocials.map(({ url, label, Icon }) => (
-              <ExternalLink
-                key={label}
-                href={url}
-                aria-label={label}
-                className="text-dim hover:text-hi grid size-8 place-items-center rounded-md transition-colors"
-              >
-                <Icon className="size-4" />
-              </ExternalLink>
+            {publicSocials.map((social) => (
+              <SocialIconLink key={social.label} social={social} />
             ))}
             <ModeToggle />
           </div>

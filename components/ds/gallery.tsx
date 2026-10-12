@@ -1,23 +1,28 @@
+import { MetaCard } from "@/components/case-study/meta-card";
 import { HeroPrompt } from "@/components/command-palette";
 import { CompanyLink } from "@/components/company-link";
 import { CollapseDemo } from "@/components/ds/collapse-demo";
 import { ExternalLink, proseLinkClass } from "@/components/external-link";
-import { GithubIcon, LinkedinIcon } from "@/components/icons";
 import { Kicker } from "@/components/kicker";
+import { RoleStack } from "@/components/landing/role-stack";
+import { TestimonialCard } from "@/components/landing/testimonials";
 import { LinkedText } from "@/components/linked-text";
-import { MetaCard } from "@/components/case-study/meta-card";
 import { ModeToggle } from "@/components/mode-toggle";
 import { ProjectCard } from "@/components/projects/project-card";
 import { PulseDot } from "@/components/pulse-dot";
-import { RoleStack } from "@/components/landing/role-stack";
+import { SocialIconLink } from "@/components/social-icon-link";
 import {
   chipClass,
   chipHoverClass,
   StackChips,
 } from "@/components/stack-chips";
-import { TestimonialCard } from "@/components/landing/testimonials";
 import { Wordmark } from "@/components/wordmark";
-import { experience, projects, testimonials } from "@/data/portfolio";
+import {
+  experience,
+  projects,
+  publicSocials,
+  testimonials,
+} from "@/data/portfolio";
 
 // Every element here is a REAL component the site ships, rendered with REAL data
 // from data/portfolio — nothing re-implemented or placeholder, so it can't drift
@@ -127,9 +132,10 @@ export function ComponentGallery() {
         <CollapseDemo />
       </Row>
 
-      <Row label="brand icons">
-        <GithubIcon className="text-dim size-5" />
-        <LinkedinIcon className="text-dim size-5" />
+      <Row label="social icons">
+        {publicSocials.map((social) => (
+          <SocialIconLink key={social.label} social={social} />
+        ))}
       </Row>
 
       <Row label="wordmark">
