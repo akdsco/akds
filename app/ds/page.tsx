@@ -30,7 +30,8 @@ export default function DesignSystemPage() {
         <p className="text-dim mt-2 max-w-prose text-sm">
           The site&rsquo;s live design language, rendered from the real tokens
           and components. Build new pages against this; it mirrors what the site
-          uses today. Toggle the theme (top-right) to see both modes.
+          uses today. Colours list both modes; toggle the theme (top-right) to
+          see the components in each.
         </p>
       </header>
 
