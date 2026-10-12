@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { ColorSwatches } from "@/components/ds/color-swatches";
+import { RadiusScale, SpacingScale, TypeScale } from "@/components/ds/scales";
 import { Kicker } from "@/components/kicker";
 
 // TB-192: the hidden, on-site design-system reference. A build-time tool that
@@ -35,6 +36,21 @@ export default function DesignSystemPage() {
       <section className="mb-14">
         <Kicker label="Colour tokens" />
         <ColorSwatches />
+      </section>
+
+      <section className="mb-14">
+        <Kicker label="Type scale" />
+        <TypeScale />
+      </section>
+
+      <section className="mb-14">
+        <Kicker label="Radius" />
+        <RadiusScale />
+      </section>
+
+      <section className="mb-14">
+        <Kicker label="Spacing" />
+        <SpacingScale />
       </section>
     </div>
   );

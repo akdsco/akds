@@ -53,3 +53,17 @@ export const typeSamples = [
   { className: "text-sm", label: "text-sm" },
   { className: "text-xs", label: "text-xs" },
 ] as const;
+
+/** A representative slice of Tailwind's spacing scale (the gaps/paddings the
+ * site reaches for). Rendered live as bars via literal `w-*` utilities. These
+ * are curated samples of the default scale, not an enumerated token set. */
+export const spacingSteps = [
+  { label: "1", className: "w-1" },
+  { label: "2", className: "w-2" },
+  { label: "3", className: "w-3" },
+  { label: "4", className: "w-4" },
+  { label: "6", className: "w-6" },
+  { label: "8", className: "w-8" },
+  { label: "12", className: "w-12" },
+  { label: "16", className: "w-16" },
+] as const;
