@@ -232,6 +232,15 @@ Then `/ship`.
 
 ## Notes
 
+- **Post-build audit (user-driven): only-what-we-use + dead code.** After the
+  first gallery shipped unused shadcn primitives with fabricated content, audited
+  every documented token/scale against real usage (grep across app+components+lib)
+  and scanned the whole repo for unused modules. Outcome: removed radius
+  `2xl/3xl/4xl` (0 uses), spacing `16` (0 uses) and the `font-heading` sample
+  (only used by the dead card); all 10 colour tokens + the listed type sizes are
+  genuinely used and kept. Repo-wide the only dead modules were
+  `components/ui/{button,card}.tsx` (0 importers) — deleted. The gallery now
+  renders the real `ProjectCard` with real `data/portfolio` data, not primitives.
 - **Value readout: build-time oklch from source, not runtime getComputedStyle
   (changed during increment 6's browser verification).** The live
   `getComputedStyle` read returned `lab(…)` — the production build's Lightning CSS
