@@ -41,4 +41,11 @@ describe("sitemap", () => {
       expect(url.startsWith(`${SITE_URL}/`)).toBe(true);
     }
   });
+
+  // TB-192 (AC#4): /ds is the hidden design-system reference. The sitemap is a
+  // manual allowlist, so it is excluded by default — this asserts it stays out
+  // if the allowlist ever grows.
+  test("omits the hidden /ds design-system reference", () => {
+    expect(urls).not.toContain(`${SITE_URL}/ds`);
+  });
 });

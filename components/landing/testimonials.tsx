@@ -17,7 +17,9 @@ const UNROLL_MS = 300;
 
 const ordered = [...testimonials].sort((a, b) => a.order - b.order);
 
-function Quote({ t }: { t: Testimonial }) {
+// Exported so the /ds design-system reference can render one real card without
+// re-implementing it. The section below still owns the layout + ordering.
+export function TestimonialCard({ t }: { t: Testimonial }) {
   const clampable = t.quote.length > CLAMP_OVER;
   const [expanded, setExpanded] = useState(false);
   const quoteId = useId();
@@ -106,7 +108,7 @@ export function Testimonials() {
       <Kicker label="testimonials" />
       <div className="grid gap-4 sm:grid-cols-2">
         {ordered.map((t) => (
-          <Quote key={t.id} t={t} />
+          <TestimonialCard key={t.id} t={t} />
         ))}
       </div>
     </section>

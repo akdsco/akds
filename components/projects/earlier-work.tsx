@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { actionButtonClass } from "@/components/action-button";
 import { Collapse } from "@/components/collapse";
 import { ProjectCard } from "@/components/projects/project-card";
 import type { Project } from "@/data/portfolio";
@@ -28,7 +29,7 @@ export function EarlierWork({ projects }: { projects: Project[] }) {
           }}
           aria-expanded={show}
           aria-controls={PANEL_ID}
-          className="border-line bg-chip text-dim hover:text-ink hover:border-hi cursor-pointer rounded-[7px] border px-3.5 py-1.5 font-mono text-xs transition-colors"
+          className={actionButtonClass}
         >
           {show
             ? "Hide earlier work"

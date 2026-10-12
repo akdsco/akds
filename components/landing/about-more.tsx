@@ -9,6 +9,7 @@ import {
   type ReactNode,
 } from "react";
 
+import { actionButtonClass } from "@/components/action-button";
 import { Collapse, COLLAPSE_MS } from "@/components/collapse";
 import { scrollIntoViewLive } from "@/lib/scroll-into-view-live";
 import { cn } from "@/lib/utils";
@@ -87,7 +88,7 @@ export function AboutMore({ children }: { children: ReactNode }) {
             onClick={revealFirst}
             aria-expanded={open}
             aria-controls={PANEL_ID}
-            className="border-line bg-chip text-dim hover:text-ink hover:border-hi inline-flex cursor-pointer items-center gap-2 rounded-[7px] border px-3.5 py-1.5 font-mono text-xs transition-colors"
+            className={cn(actionButtonClass, "inline-flex items-center gap-2")}
           >
             Experience / Skills
             <ChevronDown className="size-3.5" />

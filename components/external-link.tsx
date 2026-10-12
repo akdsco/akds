@@ -15,6 +15,15 @@ export const proseLinkClass =
   "decoration-line hover:text-hi hover:decoration-hi rounded-sm underline decoration-dotted underline-offset-[3px] transition-colors";
 
 /**
+ * Styling for an icon link — a square hit-area holding a glyph that lights to the
+ * accent on hover. The nav's GitHub/LinkedIn links use this; shared here (beside
+ * proseLinkClass) so the /ds reference renders the same interactive treatment
+ * rather than a bare, un-hoverable glyph.
+ */
+export const iconLinkClass =
+  "text-dim hover:text-hi grid size-8 place-items-center rounded-md transition-colors";
+
+/**
  * Every outbound link goes through here. It carries no visual opinion — its one
  * job is that `target="_blank"` never ships without `rel="noopener noreferrer"`,
  * which is exactly the pair that goes missing when each call site hand-rolls its
