@@ -2,34 +2,26 @@ import { CompanyLink } from "@/components/company-link";
 import { ExternalLink, proseLinkClass } from "@/components/external-link";
 import { Kicker } from "@/components/kicker";
 import { ModeToggle } from "@/components/mode-toggle";
+import { ProjectCard } from "@/components/projects/project-card";
 import { PulseDot } from "@/components/pulse-dot";
 import {
   chipClass,
   chipHoverClass,
   StackChips,
 } from "@/components/stack-chips";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Wordmark } from "@/components/wordmark";
+import { projects } from "@/data/portfolio";
 
-// The gallery imports and renders the REAL components, so it is a live instance
-// of the system — nothing here re-implements a component, so nothing can drift.
+// Everything here is a REAL component the site renders, with REAL data from
+// data/portfolio — nothing is re-implemented or placeholder, so the page shows
+// exactly what ships and can't drift from it. (The shadcn ui/button + ui/card
+// primitives are deliberately NOT shown: nothing on the site imports them; the
+// card the site actually renders is ProjectCard, below.)
 
-const buttonVariants = [
-  "default",
-  "outline",
-  "secondary",
-  "ghost",
-  "destructive",
-  "link",
-] as const;
+// The first case-study project — the same card /projects leads with. Guarded so
+// a data change can't crash the page; data/portfolio.test.ts guarantees it
+// exists in practice.
+const cardProject = projects.find((p) => p.caseStudy) ?? projects[0];
 
 function Row({
   label,
@@ -39,8 +31,8 @@ function Row({
   children: React.ReactNode;
 }) {
   return (
-    <div className="border-line flex flex-wrap items-center gap-x-6 gap-y-3 border-b py-4 last:border-b-0">
-      <span className="text-faint w-28 shrink-0 font-mono text-[11px]">
+    <div className="border-line flex flex-wrap items-start gap-x-6 gap-y-3 border-b py-5 last:border-b-0">
+      <span className="text-faint w-28 shrink-0 pt-1 font-mono text-[11px]">
         {label}
       </span>
       <div className="flex flex-wrap items-center gap-3">{children}</div>
@@ -51,35 +43,12 @@ function Row({
 export function ComponentGallery() {
   return (
     <div>
-      <Row label="button / variants">
-        {buttonVariants.map((v) => (
-          <Button key={v} variant={v}>
-            {v}
-          </Button>
-        ))}
-      </Row>
-
-      <Row label="button / sizes">
-        <Button size="xs">xs</Button>
-        <Button size="sm">sm</Button>
-        <Button size="lg">lg</Button>
-        <Button disabled>disabled</Button>
-      </Row>
-
-      <Row label="card">
-        <Card className="w-72">
-          <CardHeader>
-            <CardTitle>Card title</CardTitle>
-            <CardDescription>
-              A surface for grouped content — the project and case-study cards
-              build on this.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="text-dim text-sm">Body content.</CardContent>
-          <CardFooter className="text-faint font-mono text-[11px]">
-            footer
-          </CardFooter>
-        </Card>
+      <Row label="project card">
+        {cardProject ? (
+          <div className="w-full max-w-[340px]">
+            <ProjectCard project={cardProject} />
+          </div>
+        ) : null}
       </Row>
 
       <Row label="kicker">
@@ -89,7 +58,7 @@ export function ComponentGallery() {
       </Row>
 
       <Row label="stack chips">
-        <StackChips items={["TypeScript", "React", "Next.js", "Tailwind"]} />
+        <StackChips items={cardProject?.stack ?? []} />
       </Row>
 
       <Row label="pulse dot">
@@ -99,14 +68,19 @@ export function ComponentGallery() {
         </span>
       </Row>
 
-      <Row label="links">
+      <Row label="company link">
+        <span className="text-dim text-sm">
+          linked: <CompanyLink company="GrowthNation" />
+        </span>
+        <span className="text-dim text-sm">
+          retired: <CompanyLink company="Connect4" />
+        </span>
+      </Row>
+
+      <Row label="external link">
         <ExternalLink href="https://example.com" className={proseLinkClass}>
           a prose link
         </ExternalLink>
-        <span className="text-dim text-sm">
-          company: <CompanyLink company="GrowthNation" /> ·{" "}
-          <CompanyLink company="Connect4" />
-        </span>
       </Row>
 
       <Row label="wordmark">
@@ -125,7 +99,9 @@ export function Patterns() {
     <div className="space-y-6 text-sm">
       <div className="flex flex-wrap items-center gap-6">
         <span className={`${chipClass} ${chipHoverClass}`}>chip</span>
-        <Button variant="outline">focus me (Tab)</Button>
+        <ExternalLink href="https://example.com" className={proseLinkClass}>
+          focus me (Tab) to see the ring
+        </ExternalLink>
         <span className="text-dim">
           select this text to see the{" "}
           <span className="text-ink">selection</span> colour

@@ -24,8 +24,8 @@ export const designTokens: DesignToken[] = [
   { name: "line", role: "borders / dividers" },
   { name: "chip", role: "chip / tag background" },
   { name: "brand", role: "the cyan $ prompt + accents" },
-  { name: "hi", role: "coral highlight — kickers, arrows, pulses, emphasis" },
-  { name: "hi-soft", role: "translucent hi — glows / focus rings" },
+  { name: "hi", role: "coral highlight (kickers, arrows, pulses, emphasis)" },
+  { name: "hi-soft", role: "translucent hi (glows / focus rings)" },
 ];
 
 /** The radius scale from globals.css (`--radius-*`, derived from `--radius`).
