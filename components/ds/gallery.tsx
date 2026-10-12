@@ -1,27 +1,33 @@
+import { HeroPrompt } from "@/components/command-palette";
 import { CompanyLink } from "@/components/company-link";
+import { CollapseDemo } from "@/components/ds/collapse-demo";
 import { ExternalLink, proseLinkClass } from "@/components/external-link";
+import { GithubIcon, LinkedinIcon } from "@/components/icons";
 import { Kicker } from "@/components/kicker";
+import { LinkedText } from "@/components/linked-text";
+import { MetaCard } from "@/components/case-study/meta-card";
 import { ModeToggle } from "@/components/mode-toggle";
 import { ProjectCard } from "@/components/projects/project-card";
 import { PulseDot } from "@/components/pulse-dot";
+import { RoleStack } from "@/components/landing/role-stack";
 import {
   chipClass,
   chipHoverClass,
   StackChips,
 } from "@/components/stack-chips";
+import { TestimonialCard } from "@/components/landing/testimonials";
 import { Wordmark } from "@/components/wordmark";
-import { projects } from "@/data/portfolio";
+import { experience, projects, testimonials } from "@/data/portfolio";
 
-// Everything here is a REAL component the site renders, with REAL data from
-// data/portfolio — nothing is re-implemented or placeholder, so the page shows
-// exactly what ships and can't drift from it. (The shadcn ui/button + ui/card
-// primitives are deliberately NOT shown: nothing on the site imports them; the
-// card the site actually renders is ProjectCard, below.)
+// Every element here is a REAL component the site ships, rendered with REAL data
+// from data/portfolio — nothing re-implemented or placeholder, so it can't drift
+// from what the site renders.
 
-// The first case-study project — the same card /projects leads with. Guarded so
-// a data change can't crash the page; data/portfolio.test.ts guarantees it
-// exists in practice.
+// The first case-study project — the card /projects leads with. Guarded so a
+// data change can't crash the page; data/portfolio.test.ts guarantees it exists.
 const cardProject = projects.find((p) => p.caseStudy) ?? projects[0];
+const firstTestimonial = [...testimonials].sort((a, b) => a.order - b.order)[0];
+const firstRole = experience[0];
 
 function Row({
   label,
@@ -35,7 +41,9 @@ function Row({
       <span className="text-faint w-28 shrink-0 pt-1 font-mono text-[11px]">
         {label}
       </span>
-      <div className="flex flex-wrap items-center gap-3">{children}</div>
+      <div className="flex min-w-0 flex-wrap items-center gap-3">
+        {children}
+      </div>
     </div>
   );
 }
@@ -51,6 +59,22 @@ export function ComponentGallery() {
         ) : null}
       </Row>
 
+      <Row label="testimonial card">
+        {firstTestimonial ? (
+          <div className="w-full max-w-[340px]">
+            <TestimonialCard t={firstTestimonial} />
+          </div>
+        ) : null}
+      </Row>
+
+      <Row label="meta card">
+        {cardProject ? (
+          <div className="w-full max-w-[280px]">
+            <MetaCard project={cardProject} />
+          </div>
+        ) : null}
+      </Row>
+
       <Row label="kicker">
         <div className="w-full max-w-sm">
           <Kicker label="Section header" />
@@ -59,6 +83,12 @@ export function ComponentGallery() {
 
       <Row label="stack chips">
         <StackChips items={cardProject?.stack ?? []} />
+      </Row>
+
+      <Row label="role stack">
+        {firstRole ? (
+          <RoleStack lead={firstRole.stack.lead} rest={firstRole.stack.rest} />
+        ) : null}
       </Row>
 
       <Row label="pulse dot">
@@ -81,6 +111,25 @@ export function ComponentGallery() {
         <ExternalLink href="https://example.com" className={proseLinkClass}>
           a prose link
         </ExternalLink>
+      </Row>
+
+      <Row label="linked text">
+        <p className="text-dim max-w-prose text-sm">
+          <LinkedText text="Prose fields support inline links such as [a project page](https://example.com); only https is linkified, everything else stays literal text." />
+        </p>
+      </Row>
+
+      <Row label="hero prompt">
+        <HeroPrompt command="cat ~/about.md" />
+      </Row>
+
+      <Row label="button + collapse">
+        <CollapseDemo />
+      </Row>
+
+      <Row label="brand icons">
+        <GithubIcon className="text-dim size-5" />
+        <LinkedinIcon className="text-dim size-5" />
       </Row>
 
       <Row label="wordmark">
@@ -113,6 +162,13 @@ export function Patterns() {
           .scanline
         </span>
       </div>
+      <p className="text-faint text-xs">
+        Cards share a hover-lift (<code className="font-mono">cardLift</code> +{" "}
+        <code className="font-mono">cardLiftWrap</code>, see lib/card-lift): the
+        wrapper is the hover target so the card never pulls out from under the
+        cursor, and the shadow fades via opacity. Hover the project or
+        testimonial card above to see it.
+      </p>
     </div>
   );
 }

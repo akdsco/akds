@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ColorSwatches } from "@/components/ds/color-swatches";
 import { ComponentGallery, Patterns } from "@/components/ds/gallery";
 import { RadiusScale, SpacingScale, TypeScale } from "@/components/ds/scales";
+import { HeroBand } from "@/components/hero-band";
 import { Kicker } from "@/components/kicker";
 
 // TB-192: the hidden, on-site design-system reference. A build-time tool that
@@ -24,9 +25,7 @@ export default function DesignSystemPage() {
   return (
     <div className="mx-auto max-w-5xl px-6 py-16">
       <header className="mb-12">
-        <h1 className="font-heading text-3xl font-semibold tracking-tight">
-          Design system
-        </h1>
+        <h1 className="text-3xl font-semibold tracking-tight">Design system</h1>
         <p className="text-dim mt-2 max-w-prose text-sm">
           The site&rsquo;s live design language, rendered from the real tokens
           and components. Build new pages against this; it mirrors what the site
@@ -53,6 +52,22 @@ export default function DesignSystemPage() {
       <section className="mb-14">
         <Kicker label="Spacing" />
         <SpacingScale />
+      </section>
+
+      <section className="mb-14">
+        <Kicker label="Layout: hero band" />
+        {/* The real HeroBand (scanline backdrop, reveal) used on /projects and
+            case studies, with the actual /projects hero content. */}
+        <div className="border-line overflow-hidden rounded-lg border">
+          <HeroBand className="max-w-[880px] py-10">
+            <h2 className="text-ink text-4xl font-semibold tracking-tight">
+              Projects
+            </h2>
+            <p className="text-dim mt-2 text-lg leading-relaxed">
+              Selected work, latest first.
+            </p>
+          </HeroBand>
+        </div>
       </section>
 
       <section className="mb-14">
