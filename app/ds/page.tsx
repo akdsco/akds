@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 
+import { ColorSwatches } from "@/components/ds/color-swatches";
+import { Kicker } from "@/components/kicker";
+
 // TB-192: the hidden, on-site design-system reference. A build-time tool that
 // renders the site's LIVE design system (tokens, type, spacing, components) so
 // future pages have a canonical guide to build against and check for drift.
@@ -18,9 +21,21 @@ export const metadata: Metadata = {
 export default function DesignSystemPage() {
   return (
     <div className="mx-auto max-w-5xl px-6 py-16">
-      <h1 className="font-heading text-3xl font-semibold tracking-tight">
-        Design system
-      </h1>
+      <header className="mb-12">
+        <h1 className="font-heading text-3xl font-semibold tracking-tight">
+          Design system
+        </h1>
+        <p className="text-dim mt-2 max-w-prose text-sm">
+          The site&rsquo;s live design language, rendered from the real tokens
+          and components. Build new pages against this; it mirrors what the site
+          uses today. Toggle the theme (top-right) to see both modes.
+        </p>
+      </header>
+
+      <section className="mb-14">
+        <Kicker label="Colour tokens" />
+        <ColorSwatches />
+      </section>
     </div>
   );
 }
