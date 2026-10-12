@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { ColorSwatches } from "@/components/ds/color-swatches";
+import { ComponentGallery, Patterns } from "@/components/ds/gallery";
 import { RadiusScale, SpacingScale, TypeScale } from "@/components/ds/scales";
 import { Kicker } from "@/components/kicker";
 
@@ -51,6 +52,16 @@ export default function DesignSystemPage() {
       <section className="mb-14">
         <Kicker label="Spacing" />
         <SpacingScale />
+      </section>
+
+      <section className="mb-14">
+        <Kicker label="Components" />
+        <ComponentGallery />
+      </section>
+
+      <section className="mb-14">
+        <Kicker label="Patterns" />
+        <Patterns />
       </section>
     </div>
   );
