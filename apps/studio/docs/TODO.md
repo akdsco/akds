@@ -11,7 +11,18 @@ Pending ideas and work, kept out of CLAUDE.md so that file stays rules, not stat
       of the same wave). Do the **footer sign-off** variant too (the slower,
       glow-swell version), adapted the same way.
       Source to port from: `components/wordmark.tsx` + the `wordmark-flare` /
-      `wordmark-signoff` keyframes in `app/globals.css` on akds.dev.
+      `wordmark-signoff` keyframes in `app/globals.css` on akds.dev
+      (= `apps/portfolio`).
+
+      **Architecture decision (own ticket):** make this a **shared motion engine**
+      in `@akds/ui` (the clip/crop mechanism, geometry, and the keyframes — already
+      CSS-variable driven) that BOTH apps consume, with each app supplying its own
+      identity (the word, colours, timing; the `DESIGN` half's beat). Hard
+      constraint: akds.dev's current wordmark must render **byte-identical** after
+      the extraction (lock it with a characterization test first). This studio app
+      still carries the now-orphaned `.wordmark-*` keyframes in `app/globals.css`
+      (left from the scaffold; the `Wordmark`/geometry TS was removed in the
+      monorepo migration) — that cleanup rides with this ticket, not before it.
 
 ## Booking
 
