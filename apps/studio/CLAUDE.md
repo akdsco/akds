@@ -1,6 +1,9 @@
-# CLAUDE.md
+# CLAUDE.md — apps/studio (akdsdesign.uk)
 
-Guidance for Claude Code working in this repository.
+Guidance for Claude Code working in **this app**. It lives in a monorepo — the
+**root `CLAUDE.md`** covers workspace commands, the shared `@akds/ui` design
+system, and the `build/` output convention. Read it first; this file is the
+akdsdesign-specific layer.
 
 ## What this is
 
@@ -17,28 +20,36 @@ audiences never mix. This site sells; `akds.dev` showcases.
 
 ## Stack
 
-Same toolkit as `akds.dev`, so the two stay visually consistent:
+Same toolkit as `akds.dev` (shared at the repo root), so the two stay visually
+consistent:
 
-- **Next.js 16** App Router, **Turbopack**, **static export** (`output: "export"`).
+- **Next.js 16** App Router, **Turbopack**, **static export** (`output: "export"`,
+  `distDir: "build"`).
 - **TypeScript** total-strict, **Tailwind v4**, **next-themes** (`attribute="class"`).
-- **Vitest + Testing Library** (jsdom), **ESLint** strict + **Prettier**.
-- Deployed on **Cloudflare Pages** (build `npm run build`, output `out/`, `NODE_VERSION=24`).
+- **Vitest + Testing Library** (jsdom), **ESLint** strict + **Prettier** (one root pass).
+- Deployed on **Cloudflare Pages** (deferred): build `npm run build -w apps/studio`,
+  output `apps/studio/build`, `NODE_VERSION=24`.
 
 ```bash
-npm run dev / build / start
-npm run lint / typecheck / test
-npm run format         # prettier --write .
+npm run dev:studio               # from root
+npm run build -w apps/studio     # static export -> apps/studio/build
+npm run lint -w apps/studio
+npm run typecheck -w apps/studio
+npm run test -w apps/studio
 ```
 
 ## Design system
 
-The palette and look are **ported from akds.dev's design system** (`/ds` there):
+The palette and primitives are the **shared `@akds/ui` design system**
+(`packages/ui`), the single source both sites import from — not a copy:
 
-- `app/theme.css` holds the semantic tokens (`base/panel/ink/dim/faint/line/chip/brand/hi/hi-soft`),
-  mapped into Tailwind via `@theme inline` in `app/globals.css`. Recolour the site
-  from `theme.css` alone.
-- Build new surfaces against those tokens, not raw colours. When in doubt, the
-  canonical reference is the `/ds` page on akds.dev.
+- The semantic tokens (`base/panel/ink/dim/faint/line/chip/brand/hi/hi-soft`) live
+  in `@akds/ui`'s `theme.css`, which `app/globals.css` `@import`s and maps into
+  Tailwind via `@theme inline`. **Recolour from `packages/ui/src/theme.css`** —
+  editing it recolours both sites.
+- `cn` and `ExternalLink` also come from `@akds/ui`. Build new surfaces against the
+  tokens, not raw colours. The canonical visual reference is the `/ds` page on
+  akds.dev.
 
 ## Rules that stay true
 
@@ -50,8 +61,8 @@ The palette and look are **ported from akds.dev's design system** (`/ds` there):
   chisel wording. No made-up numbers.
 - **Pricing numbers in `data/pricing.ts` are a working draft** for the owner to
   tune, not fixed truth.
-- **Outbound links go through `ExternalLink`** so `target="_blank"` always ships
-  with `rel="noopener noreferrer"`.
+- **Outbound links go through `ExternalLink`** (from `@akds/ui`) so
+  `target="_blank"` always ships with `rel="noopener noreferrer"`.
 - This is an **indexable marketing site** (unlike akds.dev's hidden `/ds`): robots
   allows all, every public route is in the sitemap. Metadata routes
   (`robots.ts`, `sitemap.ts`) must declare `export const dynamic = "force-static"`
@@ -61,7 +72,11 @@ The palette and look are **ported from akds.dev's design system** (`/ds` there):
 
 ```
 app/         # routes: / (landing), /pricing, robots.ts, sitemap.ts
-components/   # shell (site-nav, site-footer, brand-lockup) + cards (work-card) + ds primitives
-lib/          # site config, button classes, cn, wordmark geometry
+components/   # shell (site-nav, site-footer, brand-lockup), cards (work-card), book-call, kicker
+lib/          # site.ts (config), button.ts (button classes)
 data/         # work.ts (portfolio), pricing.ts (tiers / care plans / add-ons)
 ```
+
+`cn` and `ExternalLink` are imported from `@akds/ui` (not local). This app has no
+wordmark yet — porting a distinct akdsDESIGN wordmark is tracked in
+`docs/TODO.md`.
