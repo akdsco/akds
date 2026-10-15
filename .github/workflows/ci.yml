@@ -15,9 +15,13 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
+# Monorepo: the root lint/typecheck/test/build scripts fan out across every
+# workspace (`npm run <x> --workspaces --if-present`), so each step below covers
+# both apps (apps/portfolio + apps/studio) in one invocation. format:check runs
+# prettier once at the root.
 jobs:
   verify:
-    name: format · lint · typecheck · test · build
+    name: format · lint · typecheck · test · build (all workspaces)
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
