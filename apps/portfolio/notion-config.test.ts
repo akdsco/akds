@@ -10,7 +10,13 @@ import { describe, expect, it } from "vitest";
 // to "no board", which is the failure this guards. Server + board id are left
 // unset on purpose: both default correctly, so there is no value here to drift.
 describe(".claude/notion.json", () => {
-  const raw = readFileSync(join(__dirname, ".claude", "notion.json"), "utf8");
+  // `.claude/` stays at the monorepo root (shared config), two levels up from
+  // this app (apps/portfolio/). Reach it explicitly rather than cwd-relative so
+  // the test passes whether run from the app or the repo root.
+  const raw = readFileSync(
+    join(__dirname, "..", "..", ".claude", "notion.json"),
+    "utf8",
+  );
 
   it("is valid JSON naming the Portfolio 2026 project", () => {
     const config: unknown = JSON.parse(raw);
