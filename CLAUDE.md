@@ -40,6 +40,11 @@ Rules:
   exists to prevent.
 - Each app sets `transpilePackages: ["@akds/ui"]` (Next compiles the package's TS
   source — there is no build step) and a vitest `@akds/ui` → source alias.
+- **Each app's `app/globals.css` must `@source "../../../packages/ui/src"`.**
+  Tailwind v4 does not scan `node_modules`, so without it any utility used ONLY in
+  a shared primitive (e.g. `ExternalLink`'s `decoration-dotted`) is never
+  generated and that element renders unstyled — a silent CSS regression the build
+  does not fail on. A per-app `shared-ui-source.test.ts` guards the directive.
 - The **wordmark is intentionally NOT shared**: it is brand-specific and the two
   sites' wordmarks are meant to differ. The portfolio owns its wordmark locally.
 
