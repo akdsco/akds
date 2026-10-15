@@ -3,6 +3,13 @@
 @import "shadcn/tailwind.css";
 @import "../../../packages/ui/src/theme.css";
 
+/* Tailwind v4 auto-scans this app's own tree but not node_modules, and the
+ * shared @akds/ui primitives (ExternalLink's proseLinkClass/iconLinkClass, etc.)
+ * live in packages/ui. Without this, class names used ONLY in the shared package
+ * (decoration-line, decoration-dotted, underline-offset-[3px], ...) never get
+ * generated and those links render unstyled. Scan the package source too. */
+@source "../../../packages/ui/src";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
