@@ -1,4 +1,4 @@
-import { ExternalLink, proseLinkClass } from "@/components/external-link";
+import { ExternalLink, proseLinkClass } from "@akds/ui";
 import { companyHref, type CompanyName } from "@/data/portfolio";
 
 /**

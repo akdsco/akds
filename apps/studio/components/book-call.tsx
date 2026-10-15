@@ -1,7 +1,6 @@
-import { ExternalLink } from "@/components/external-link";
+import { cn, ExternalLink } from "@akds/ui";
 import { primaryButton, ghostButton } from "@/lib/button";
 import { BOOKING_URL } from "@/lib/site";
-import { cn } from "@/lib/utils";
 
 // The one conversion action on the site: book a short call. Points at the
 // Cal.com link (BOOKING_URL) so the whole flow stays off this static site.

@@ -1,4 +1,4 @@
-import { ExternalLink } from "@/components/external-link";
+import { ExternalLink } from "@akds/ui";
 import type { WorkItem } from "@/data/work";
 
 // A single piece of work. The whole card is the link to the live site, so the

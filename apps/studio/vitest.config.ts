@@ -10,6 +10,10 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": resolve(__dirname, "./"),
+      // Resolve the shared workspace package to its TS source so vitest (swc)
+      // transforms it, instead of treating the symlinked dep as untransformed
+      // node_modules.
+      "@akds/ui": resolve(__dirname, "../../packages/ui/src/index.ts"),
     },
   },
   test: {

@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@akds/ui";
 
 /** How long the rows take to move. Keep in sync with `duration-300` below. */
 export const COLLAPSE_MS = 300;

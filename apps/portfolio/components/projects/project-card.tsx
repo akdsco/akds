@@ -4,7 +4,7 @@ import { StackChips } from "@/components/stack-chips";
 import type { Project } from "@/data/portfolio";
 import { cardLift, cardLiftWrap } from "@/lib/card-lift";
 import { plainText } from "@/lib/inline-links";
-import { cn } from "@/lib/utils";
+import { cn } from "@akds/ui";
 
 export function ProjectCard({ project }: { project: Project }) {
   const linked = Boolean(project.caseStudy);

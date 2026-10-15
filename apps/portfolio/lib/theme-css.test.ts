@@ -3,7 +3,7 @@ import { describe, expect, test } from "vitest";
 import { designTokens } from "./design-tokens";
 import { readThemeTokenValues } from "./theme-css";
 
-// TB-192 (AC#3): the authored oklch values parsed from app/theme.css must cover
+// TB-192 (AC#3): the authored oklch values parsed from packages/ui/src/theme.css must cover
 // every semantic token, in both modes — so the /ds reference shows real source
 // values, not copied literals, and a theme.css edit flows straight through.
 describe("readThemeTokenValues", () => {

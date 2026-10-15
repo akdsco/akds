@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { ExternalLink, proseLinkClass } from "@/components/external-link";
+import { ExternalLink, proseLinkClass } from "@akds/ui";
 import { INLINE_LINK } from "@/lib/inline-links";
 
 /**

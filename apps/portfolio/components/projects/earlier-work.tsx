@@ -6,7 +6,7 @@ import { actionButtonClass } from "@/components/action-button";
 import { Collapse } from "@/components/collapse";
 import { ProjectCard } from "@/components/projects/project-card";
 import type { Project } from "@/data/portfolio";
-import { cn } from "@/lib/utils";
+import { cn } from "@akds/ui";
 
 const PANEL_ID = "earlier-work";
 

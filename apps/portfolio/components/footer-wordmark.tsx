@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { Wordmark } from "@/components/wordmark";
-import { cn } from "@/lib/utils";
+import { cn } from "@akds/ui";
 
 /** Marks this browsing session's footer sign-off as spent. sessionStorage, not
  *  localStorage: "once per visit" is a session, so a tab close resets it and a

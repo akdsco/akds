@@ -11,7 +11,7 @@ import { SocialIconLink } from "@/components/social-icon-link";
 import { Wordmark } from "@/components/wordmark";
 import { publicSocials } from "@/data/portfolio";
 import { useDwellFlare } from "@/lib/use-dwell-flare";
-import { cn } from "@/lib/utils";
+import { cn } from "@akds/ui";
 
 const links = [
   { href: "/about", label: "About" },

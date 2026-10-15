@@ -12,7 +12,7 @@ import {
 import { actionButtonClass } from "@/components/action-button";
 import { Collapse, COLLAPSE_MS } from "@/components/collapse";
 import { scrollIntoViewLive } from "@/lib/scroll-into-view-live";
-import { cn } from "@/lib/utils";
+import { cn } from "@akds/ui";
 
 const MANAGED = ["skills", "experience", "testimonials"];
 // querySelector returns the first match in *document* order, so this asks the

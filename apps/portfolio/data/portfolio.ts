@@ -89,9 +89,7 @@ export type CompanyName =
  * loses that.
  */
 export type CompanySite =
-  | `https://${string}`
-  | "url-no-longer-active"
-  | "no-public-url";
+  `https://${string}` | "url-no-longer-active" | "no-public-url";
 
 /**
  * Keyed by `CompanyName`, so this is exhaustive: add a company to the union

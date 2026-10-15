@@ -5,7 +5,7 @@ import {
   WORDMARK_LIFT_HEIGHT,
   WORDMARK_TRACKING,
 } from "@/lib/wordmark";
-import { cn } from "@/lib/utils";
+import { cn } from "@akds/ui";
 
 /**
  * The "akds" wordmark, cut off by the bottom of its own box.

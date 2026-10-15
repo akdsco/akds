@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { BrandLockup } from "@/components/brand-lockup";
-import { ExternalLink, proseLinkClass } from "@/components/external-link";
+import { ExternalLink, proseLinkClass } from "@akds/ui";
 import { PERSONAL_URL, SITE_TAGLINE } from "@/lib/site";
 
 const year = new Date().getFullYear();

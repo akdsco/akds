@@ -5,7 +5,7 @@ import { useEffect, useId, useState } from "react";
 import { Kicker } from "@/components/kicker";
 import { testimonials, type Testimonial } from "@/data/portfolio";
 import { cardLift, cardLiftWrap } from "@/lib/card-lift";
-import { cn } from "@/lib/utils";
+import { cn } from "@akds/ui";
 
 // Quotes run 162–327 chars; clamp the long ones with a Read more toggle.
 const CLAMP_OVER = 200;

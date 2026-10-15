@@ -2,7 +2,7 @@ import { MetaCard } from "@/components/case-study/meta-card";
 import { HeroPrompt } from "@/components/command-palette";
 import { CompanyLink } from "@/components/company-link";
 import { CollapseDemo } from "@/components/ds/collapse-demo";
-import { ExternalLink, proseLinkClass } from "@/components/external-link";
+import { ExternalLink, proseLinkClass } from "@akds/ui";
 import { Kicker } from "@/components/kicker";
 import { RoleStack } from "@/components/landing/role-stack";
 import { TestimonialCard } from "@/components/landing/testimonials";

@@ -1,5 +1,9 @@
-import { ExternalLink, iconLinkClass } from "@/components/external-link";
-import { GithubIcon, LinkedinIcon } from "@/components/icons";
+import {
+  ExternalLink,
+  GithubIcon,
+  iconLinkClass,
+  LinkedinIcon,
+} from "@akds/ui";
 import type { SocialLink } from "@/data/portfolio";
 
 // One owner for a social link rendered as an icon: the ExternalLink + icon-link

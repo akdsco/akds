@@ -23,7 +23,7 @@ import {
 } from "react";
 
 import { profile } from "@/data/portfolio";
-import { cn } from "@/lib/utils";
+import { cn } from "@akds/ui";
 
 export type CommandTag = "go" | "external" | "toggle";
 

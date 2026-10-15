@@ -13,7 +13,7 @@ import { plainText } from "@/lib/inline-links";
 import { OG_SHARED } from "@/lib/site";
 import { truncateForMeta } from "@/lib/truncate";
 import { breadcrumbLd } from "@/lib/structured-data";
-import { cn } from "@/lib/utils";
+import { cn } from "@akds/ui";
 
 const SECTION_ORDER = [
   { key: "problem", kicker: "where it started", title: "Problem" },

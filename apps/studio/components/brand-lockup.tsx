@@ -1,5 +1,5 @@
 import { BRAND_PRIMARY, BRAND_SUFFIX } from "@/lib/site";
-import { cn } from "@/lib/utils";
+import { cn } from "@akds/ui";
 
 // The wordmark: "akds" in ink, "design" dimmed, set in mono so it reads
 // dev-coded, tying this studio to akds.dev without repeating its cropped mark.

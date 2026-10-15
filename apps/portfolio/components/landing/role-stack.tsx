@@ -4,7 +4,7 @@ import { useId, useState } from "react";
 
 import { Collapse } from "@/components/collapse";
 import { chipClass, chipHoverClass } from "@/components/stack-chips";
-import { cn } from "@/lib/utils";
+import { cn } from "@akds/ui";
 
 // A role's tech, led by the few worth scanning. The rest sits behind a toggle
 // so a long stack can't bury the role it belongs to — the reader gets one line,

@@ -1,6 +1,6 @@
 // Source data for the hidden /ds design-system reference (TB-192).
 //
-// The semantic colour palette's single source of truth is app/theme.css. This
+// The semantic colour palette's single source of truth is packages/ui/src/theme.css. This
 // file lists the token NAMES + their roles; design-tokens.test.ts guards that
 // the name set matches theme.css exactly, so it can't silently drift. The
 // reference paints each swatch from the live `var(--<name>)` and reads the oklch
@@ -10,11 +10,11 @@
 export type DesignToken = {
   /** CSS custom property name without the leading `--` (e.g. "base"). */
   name: string;
-  /** What role this colour plays, per the app/theme.css header. */
+  /** What role this colour plays, per the packages/ui/src/theme.css header. */
   role: string;
 };
 
-/** The semantic colour palette — mirrors app/theme.css `:root`/`.dark`. */
+/** The semantic colour palette — mirrors packages/ui/src/theme.css `:root`/`.dark`. */
 export const designTokens: DesignToken[] = [
   { name: "base", role: "page background" },
   { name: "panel", role: "cards / surfaces" },

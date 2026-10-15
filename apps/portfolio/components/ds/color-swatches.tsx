@@ -3,7 +3,7 @@ import { readThemeTokenValues } from "@/lib/theme-css";
 
 // Server component. Each token shows BOTH of its authored values at once — a
 // light swatch and a dark swatch, each painted with the exact oklch read from
-// app/theme.css at build time and paired with that value. Showing both modes
+// packages/ui/src/theme.css at build time and paired with that value. Showing both modes
 // side by side (rather than one live-painted swatch keyed to the active theme,
 // which read as a mismatch against the two values listed beside it) is what
 // makes the swatch unambiguously line up with its number. It's a true mirror of

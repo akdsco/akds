@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 import { HeroLines } from "@/components/hero-lines";
-import { cn } from "@/lib/utils";
+import { cn } from "@akds/ui";
 
 // Shared hero band: a bordered, relative section with the static scanline and
 // the animated line-blip fx behind a centered content container. Every page's

@@ -7,7 +7,7 @@ import { readThemeTokenValues } from "@/lib/theme-css";
 
 // TB-192 (AC#2, AC#3): the colour section renders the real palette — one entry
 // per semantic token with its name + role, and BOTH authored values (light +
-// dark) read straight from app/theme.css, each painted as its own swatch. A
+// dark) read straight from packages/ui/src/theme.css, each painted as its own swatch. A
 // true source mirror: swatch and value both come from the parsed oklch, so they
 // can't disagree and nothing is hand-copied.
 describe("ColorSwatches", () => {

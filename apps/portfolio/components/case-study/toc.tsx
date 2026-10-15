@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@akds/ui";
 
 // Where the reading line sits, as a fraction of the viewport height: a section
 // becomes current once its heading has crossed it on the way up.
