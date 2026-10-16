@@ -1,4 +1,4 @@
-# CLAUDE.md — apps/studio (akdsdesign.uk)
+# CLAUDE.md — apps/design (akdsdesign.uk)
 
 Guidance for Claude Code working in **this app**. It lives in a monorepo — the
 **root `CLAUDE.md`** covers workspace commands, the shared `@akds/ui` design
@@ -7,7 +7,7 @@ akdsdesign-specific layer.
 
 ## What this is
 
-**akdsdesign** is the studio arm of `akds`: websites and automations for
+**akdsDESIGN** is the services arm of `akds`: websites and automations for
 independent London shops and studios. It is deliberately kept **separate from the
 personal site** (`akds.dev`, the job-search / engineering portfolio) so the two
 audiences never mix. This site sells; `akds.dev` showcases.
@@ -27,15 +27,15 @@ consistent:
   `distDir: "build"`).
 - **TypeScript** total-strict, **Tailwind v4**, **next-themes** (`attribute="class"`).
 - **Vitest + Testing Library** (jsdom), **ESLint** strict + **Prettier** (one root pass).
-- Deployed on **Cloudflare Pages** (deferred): build `npm run build -w apps/studio`,
-  output `apps/studio/build`, `NODE_VERSION=24`.
+- Deployed on **Cloudflare Pages** (deferred): build `npm run build -w apps/design`,
+  output `apps/design/build`, `NODE_VERSION=24`.
 
 ```bash
-npm run dev:studio               # from root
-npm run build -w apps/studio     # static export -> apps/studio/build
-npm run lint -w apps/studio
-npm run typecheck -w apps/studio
-npm run test -w apps/studio
+npm run dev:design               # from root
+npm run build -w apps/design     # static export -> apps/design/build
+npm run lint -w apps/design
+npm run typecheck -w apps/design
+npm run test -w apps/design
 ```
 
 ## Design system

@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "dev:portfolio": "npm run dev -w apps/portfolio",
-    "dev:studio": "npm run dev -w apps/studio",
+    "dev:design": "npm run dev -w apps/design",
     "build": "npm run build --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
