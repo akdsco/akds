@@ -10,14 +10,14 @@ design system so their look cannot drift.
 ```
 apps/
   portfolio/   # akds.dev — the personal engineering portfolio (job search). Showcases.
-  studio/      # akdsdesign.uk — the studio/services site (web + automations). Sells.
+  design/      # akdsdesign.uk — the akdsDESIGN services site (web + automations). Sells.
 packages/
   ui/          # @akds/ui — the SHARED design system (single source of truth)
 docs/          # plans (docs/plans), ephemeral ship ledger (gitignored)
 ```
 
 Each app has its own `CLAUDE.md` with its domain rules — **read the one for the
-app you are working in** (`apps/portfolio/CLAUDE.md`, `apps/studio/CLAUDE.md`).
+app you are working in** (`apps/portfolio/CLAUDE.md`, `apps/design/CLAUDE.md`).
 This root file covers only what is true across the whole repo.
 
 ## The design system is `@akds/ui` — do not re-copy it
@@ -63,10 +63,10 @@ npm run format      # prettier --write .   (ONE pass at the root, all files)
 npm run format:check
 
 npm run dev:portfolio   # = npm run dev -w apps/portfolio
-npm run dev:studio      # = npm run dev -w apps/studio
+npm run dev:design      # = npm run dev -w apps/design
 ```
 
-Target a single app with `-w`, e.g. `npm run test -w apps/studio`.
+Target a single app with `-w`, e.g. `npm run test -w apps/design`.
 
 ## Output: `build/`, not `out/`
 
@@ -81,8 +81,8 @@ Each app is its own Cloudflare Pages project, built from this one repo:
 - **apps/portfolio → akds.dev** (existing project `akds-portfolio-2026`): build
   command `npm run build -w apps/portfolio`, output dir `apps/portfolio/build`,
   `NODE_VERSION=24`, plus the analytics token env. See `apps/portfolio/CLAUDE.md`.
-- **apps/studio → akdsdesign.uk** (deferred): build `npm run build -w apps/studio`,
-  output `apps/studio/build`. See `apps/studio/CLAUDE.md`.
+- **apps/design → akdsdesign.uk** (deferred): build `npm run build -w apps/design`,
+  output `apps/design/build`. See `apps/design/CLAUDE.md`.
 
 Production only moves when a merge to `main` lands; branches never deploy.
 
