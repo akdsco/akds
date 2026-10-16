@@ -27,8 +27,9 @@ consistent:
   `distDir: "build"`).
 - **TypeScript** total-strict, **Tailwind v4**, **next-themes** (`attribute="class"`).
 - **Vitest + Testing Library** (jsdom), **ESLint** strict + **Prettier** (one root pass).
-- Deployed on **Cloudflare Pages** (deferred): build `npm run build -w apps/design`,
-  output `apps/design/build`, `NODE_VERSION=24`.
+- Deployed on **Cloudflare Pages**, project `akds-design` (`akds-design.pages.dev`):
+  build `npm run build -w apps/design`, output `apps/design/build`,
+  `NODE_VERSION=24`.
 
 ```bash
 npm run dev:design               # from root
