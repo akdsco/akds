@@ -1,4 +1,4 @@
-# Repo rules — akds-portfolio-2026 (additive to core)
+# Repo rules — akds (additive to core)
 
 Read by `/ts-code-review` on top of its shipped `rules/00`–`40`. These add
 house-specific invariants; they never lower a core severity.
