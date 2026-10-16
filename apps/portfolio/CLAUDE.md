@@ -53,8 +53,10 @@ Vercel deploy on arkadiusz.tech is retired — do not assume Vercel.
   `export const dynamic = "force-static"`** or the export build aborts — `dynamic`
   can't be re-exported, so each `twitter-image.tsx` re-exporter declares it
   directly. `app/static-export-routes.test.ts` guards this.
-- **Cloudflare Pages build:** Git-connected to `akdsco/akds-portfolio-2026`
-  (project `akds-portfolio-2026`). In the monorepo the build command is
+- **Cloudflare Pages build:** Git-connected to `akdsco/akds` (the GitHub repo was
+  renamed from `akds-portfolio-2026`; old URLs redirect). The Cloudflare Pages
+  **project** is still named `akds-portfolio-2026` (project name ≠ repo name). In
+  the monorepo the build command is
   `npm run build -w apps/portfolio` and the output dir is `apps/portfolio/build`
   (changed from the pre-monorepo `npm run build` / `out`). Env `NODE_VERSION=24`
   stays.
