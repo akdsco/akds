@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
-import { CloudflareAnalytics } from "@/components/cloudflare-analytics";
 import { JsonLd } from "@/components/json-ld";
 import { ThemeProvider } from "@/components/theme-provider";
 import { PaletteProvider } from "@/components/command-palette";
@@ -93,10 +92,8 @@ export default function RootLayout({
             <SiteFooter />
           </PaletteProvider>
         </ThemeProvider>
-        {/* Cloudflare Web Analytics — renders only when the beacon token is set
-            (production builds on Cloudflare), so dev and token-less builds stay
-            quiet. */}
-        {process.env.NODE_ENV === "production" && <CloudflareAnalytics />}
+        {/* Web Analytics is served by Cloudflare's dashboard Automatic setup
+            (edge-injected beacon), so there is no in-repo analytics script. */}
       </body>
     </html>
   );

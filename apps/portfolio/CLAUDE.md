@@ -57,8 +57,10 @@ Vercel deploy on arkadiusz.tech is retired — do not assume Vercel.
   (project `akds-portfolio-2026`). In the monorepo the build command is
   `npm run build -w apps/portfolio` and the output dir is `apps/portfolio/build`
   (changed from the pre-monorepo `npm run build` / `out`). Env `NODE_VERSION=24`
-  and `NEXT_PUBLIC_CF_ANALYTICS_TOKEN` for the Cloudflare Web Analytics beacon
-  (`components/cloudflare-analytics.tsx` renders nothing without it) stay.
+  stays.
+- **Analytics:** Cloudflare Web Analytics is served by the dashboard's
+  **Automatic setup** (edge-injected beacon) — there is no in-repo analytics
+  script. Do not re-add one: a second beacon would double-count.
 - **Routing at the edge:** `public/_redirects` does the `301 / → /about` (under
   export, `app/page.tsx`'s `redirect()` only fires client-side). `public/_headers`
   pins `image/png` on the extensionless OG card files. `www.akds.dev` → apex via a
