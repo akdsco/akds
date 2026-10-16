@@ -1,0 +1,391 @@
+"use client";
+
+import fuzzysort from "fuzzysort";
+import {
+  AnimatePresence,
+  domAnimation,
+  LazyMotion,
+  m,
+  MotionConfig,
+} from "motion/react";
+import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
+
+import { profile } from "@/data/portfolio";
+import { cn } from "@akds/ui";
+
+export type CommandTag = "go" | "external" | "toggle";
+
+// Static metadata for every command — the single source of truth for keys and
+// labels. The palette UI attaches a per-key `run` handler; `filterCommands`
+// matches against this shape. Keeping it module-level makes matching unit-
+// testable without mounting the component.
+export type CommandMeta = {
+  key: string;
+  label: string;
+  tag: CommandTag;
+};
+
+export const commandList: CommandMeta[] = [
+  { key: "/about", label: "Go to about", tag: "go" },
+  { key: "/projects", label: "Browse all projects", tag: "go" },
+  { key: "/skills", label: "Jump to skills", tag: "go" },
+  { key: "/experience", label: "Jump to experience", tag: "go" },
+  { key: "/testimonials", label: "Jump to testimonials", tag: "go" },
+  { key: "/github", label: "Open GitHub", tag: "external" },
+  { key: "/linkedin", label: "Open LinkedIn", tag: "external" },
+  { key: "/theme", label: "Toggle light / dark", tag: "toggle" },
+  { key: "/top", label: "Back to the top", tag: "go" },
+];
+
+// Pure matcher: fuzzysort ranks subsequence matches by score across key +
+// label. Empty query returns everything. Extracted so the matching contract
+// (e.g. "/ttop" must match nothing) is testable in isolation.
+export function filterCommands<T extends { key: string; label: string }>(
+  query: string,
+  commands: readonly T[],
+): T[] {
+  const q = query.trim();
+  if (!q) return commands.slice();
+  return fuzzysort
+    .go(q, commands, { keys: ["key", "label"] })
+    .map((r) => r.obj);
+}
+
+type Command = CommandMeta & { run: () => void };
+
+const PaletteContext = createContext<{ open: () => void } | null>(null);
+
+export function usePalette() {
+  const ctx = useContext(PaletteContext);
+  if (!ctx) throw new Error("usePalette must be used within <PaletteProvider>");
+  return ctx;
+}
+
+function isTypingTarget(target: EventTarget | null) {
+  const el = target as HTMLElement | null;
+  if (!el) return false;
+  const tag = el.tagName;
+  return tag === "INPUT" || tag === "TEXTAREA" || el.isContentEditable;
+}
+
+const optionId = (key: string) => `cmd-${key.replace(/[^a-z]/gi, "")}`;
+
+export function PaletteProvider({ children }: { children: ReactNode }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [active, setActive] = useState(0);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const restoreRef = useRef<HTMLElement | null>(null);
+
+  const router = useRouter();
+  const { resolvedTheme, setTheme } = useTheme();
+
+  const open = useCallback(() => {
+    restoreRef.current = document.activeElement as HTMLElement | null;
+    setQuery("");
+    setActive(0);
+    setIsOpen(true);
+  }, []);
+
+  const close = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  const social = useCallback(
+    (label: string) => profile.socials.find((s) => s.label === label)?.url,
+    [],
+  );
+
+  const commands = useMemo<Command[]>(() => {
+    const goto = (href: string) => {
+      close();
+      router.push(href);
+    };
+    const openExternal = (url?: string) => {
+      if (url) window.open(url, "_blank", "noopener,noreferrer");
+      close();
+    };
+    // Jump to a collapsible About section: on /about, reveal it in place; from
+    // elsewhere, navigate to the hash (AboutMore reveals it on mount).
+    const goSection = (id: string) => {
+      close();
+      if (window.location.pathname === "/about") {
+        history.replaceState(null, "", `#${id}`);
+        window.dispatchEvent(new CustomEvent("about:reveal", { detail: id }));
+      } else {
+        router.push(`/about#${id}`);
+      }
+    };
+    const runFor = (key: string): (() => void) => {
+      switch (key) {
+        case "/about":
+          return () => {
+            goto("/about");
+          };
+        case "/projects":
+          return () => {
+            goto("/projects");
+          };
+        case "/skills":
+          return () => {
+            goSection("skills");
+          };
+        case "/experience":
+          return () => {
+            goSection("experience");
+          };
+        case "/testimonials":
+          return () => {
+            goSection("testimonials");
+          };
+        case "/github":
+          return () => {
+            openExternal(social("GitHub"));
+          };
+        case "/linkedin":
+          return () => {
+            openExternal(social("LinkedIn"));
+          };
+        case "/theme":
+          return () => {
+            setTheme(resolvedTheme === "dark" ? "light" : "dark");
+            close();
+          };
+        case "/top":
+          return () => {
+            close();
+            // Whichever page you're on. scrollTo with no behavior honours the
+            // CSS scroll-behavior (smooth, reduced-safe).
+            window.scrollTo({ top: 0 });
+          };
+        default:
+          return () => {
+            /* unknown key: no-op */
+          };
+      }
+    };
+    return commandList.map((c) => ({ ...c, run: runFor(c.key) }));
+  }, [close, router, setTheme, resolvedTheme, social]);
+
+  const filtered = useMemo(
+    () => filterCommands(query, commands),
+    [commands, query],
+  );
+
+  // Global shortcuts: Cmd/Ctrl+K anywhere; "/" when not typing in a field.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const cmdK = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k";
+      const slash = e.key === "/" && !isTypingTarget(e.target);
+      if (cmdK) {
+        e.preventDefault();
+        if (isOpen) close();
+        else open();
+      } else if (slash && !isOpen) {
+        e.preventDefault();
+        open();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [isOpen, open, close]);
+
+  // Focus the input on open; restore focus to the trigger on close.
+  useEffect(() => {
+    if (isOpen) inputRef.current?.focus();
+    else restoreRef.current?.focus();
+  }, [isOpen]);
+
+  const onInputKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActive((a) => Math.min(a + 1, filtered.length - 1));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActive((a) => Math.max(a - 1, 0));
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      filtered[active]?.run();
+    } else if (e.key === "Escape") {
+      e.preventDefault();
+      close();
+    } else if (e.key === "Tab") {
+      // Focus trap: the input is the only focusable element in the dialog, so
+      // keep Tab from moving focus to the page behind the modal.
+      e.preventDefault();
+    }
+  };
+
+  const activeCmd = filtered[active];
+
+  return (
+    <PaletteContext.Provider value={{ open }}>
+      {children}
+      <LazyMotion features={domAnimation}>
+        <MotionConfig reducedMotion="user">
+          <AnimatePresence>
+            {isOpen && (
+              <m.div
+                key="palette"
+                className="fixed inset-0 z-50 flex items-start justify-center bg-black/40 px-4 pt-[15vh]"
+                onClick={close}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.15 }}
+              >
+                <m.div
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label="Command palette"
+                  className="w-full max-w-md"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                  initial={{ opacity: 0, scale: 0.98, y: -6 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.98, y: -6 }}
+                  transition={{ duration: 0.16, ease: "easeOut" }}
+                >
+                  <div className="border-hi bg-panel flex items-center gap-2 rounded-[9px] border px-3 py-2.5 font-mono text-[13px] shadow-[0_0_0_3px_var(--hi-soft)]">
+                    <span className="text-brand">$</span>
+                    <input
+                      ref={inputRef}
+                      type="text"
+                      role="combobox"
+                      aria-expanded="true"
+                      aria-controls="palette-list"
+                      aria-autocomplete="list"
+                      aria-activedescendant={
+                        activeCmd ? optionId(activeCmd.key) : undefined
+                      }
+                      aria-label="Type a command"
+                      value={query}
+                      onChange={(e) => {
+                        setQuery(e.target.value);
+                        setActive(0);
+                      }}
+                      onKeyDown={onInputKeyDown}
+                      placeholder="type a command…  esc to close"
+                      autoComplete="off"
+                      autoCorrect="off"
+                      spellCheck={false}
+                      className="text-ink placeholder:text-faint min-w-0 flex-1 bg-transparent outline-none"
+                    />
+                  </div>
+
+                  <ul
+                    id="palette-list"
+                    role="listbox"
+                    aria-label="Commands"
+                    className="border-line bg-panel mt-2 max-h-[min(68vh,34rem)] overflow-auto rounded-[9px] border p-1.5 shadow-[0_18px_44px_-14px_rgba(0,0,0,0.55)]"
+                  >
+                    {filtered.length === 0 ? (
+                      <li
+                        role="option"
+                        aria-selected={false}
+                        aria-disabled="true"
+                        className="text-faint px-2.5 py-2 font-mono text-[12px]"
+                      >
+                        no matching command
+                      </li>
+                    ) : (
+                      filtered.map((c, i) => (
+                        <li
+                          key={c.key}
+                          id={optionId(c.key)}
+                          role="option"
+                          aria-selected={i === active}
+                          onMouseEnter={() => {
+                            setActive(i);
+                          }}
+                          onClick={c.run}
+                          className={cn(
+                            "flex cursor-pointer items-center gap-3 rounded-md px-2.5 py-2",
+                            i === active && "bg-chip",
+                          )}
+                        >
+                          <span className="text-ink min-w-[108px] font-mono text-[12.5px]">
+                            {c.key}
+                          </span>
+                          <span className="text-dim flex-1 text-[12.5px]">
+                            {c.label}
+                          </span>
+                          <span className="text-hi border-line rounded-[4px] border px-1.5 py-0.5 font-mono text-[9.5px] tracking-[0.06em] uppercase">
+                            {c.tag}
+                          </span>
+                        </li>
+                      ))
+                    )}
+                  </ul>
+                </m.div>
+              </m.div>
+            )}
+          </AnimatePresence>
+        </MotionConfig>
+      </LazyMotion>
+    </PaletteContext.Provider>
+  );
+}
+
+// The terminal prompt in each hero; opens the palette. `command` is the
+// per-page label (e.g. "cat ~/about.md").
+export function HeroPrompt({ command }: { command: string }) {
+  const { open } = usePalette();
+  return (
+    <button
+      type="button"
+      onClick={open}
+      aria-haspopup="dialog"
+      aria-keyshortcuts="/ Meta+K Control+K"
+      // Lead the accessible name with the visible command, then state the
+      // action. WCAG 2.5.3 (Label in Name): the name must contain the visible
+      // label, so a voice-control user can activate it by what they read. The
+      // decorative prompt, cursor and hint below are aria-hidden so they don't
+      // count as visible label text in that comparison.
+      aria-label={`${command}, open command palette`}
+      className="text-dim focus-visible:outline-hi inline-flex cursor-pointer items-center gap-2 rounded-[5px] font-mono text-[12.5px] focus-visible:outline-2 focus-visible:outline-offset-4"
+    >
+      <span className="text-brand" aria-hidden="true">
+        $
+      </span>
+      <span
+        className="type-in"
+        style={{ "--tw": `${command.length}ch` } as CSSProperties}
+      >
+        {command}
+      </span>
+      <span
+        aria-hidden="true"
+        className="bg-brand animate-blink inline-block h-[14px] w-2"
+      />
+      <span
+        aria-hidden="true"
+        className="ml-2 hidden items-center gap-2 sm:flex"
+      >
+        <span className="text-faint">try</span>
+        <kbd className="border-line text-dim rounded-[5px] border px-1.5 py-px text-[11px]">
+          /
+        </kbd>
+        <span className="text-faint">or</span>
+        <kbd className="border-line text-dim rounded-[5px] border px-1.5 py-px text-[11px]">
+          ⌘K
+        </kbd>
+      </span>
+    </button>
+  );
+}
