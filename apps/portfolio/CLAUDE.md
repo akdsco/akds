@@ -55,7 +55,7 @@ Vercel deploy on arkadiusz.tech is retired — do not assume Vercel.
   directly. `app/static-export-routes.test.ts` guards this.
 - **Cloudflare Pages build:** Git-connected to `akdsco/akds` (the GitHub repo was
   renamed from `akds-portfolio-2026`; old URLs redirect). The Cloudflare Pages
-  **project** is still named `akds-portfolio-2026` (project name ≠ repo name). In
+  **project** is `akds-portfolio` (`akds-portfolio.pages.dev`). In
   the monorepo the build command is
   `npm run build -w apps/portfolio` and the output dir is `apps/portfolio/build`
   (changed from the pre-monorepo `npm run build` / `out`). Env `NODE_VERSION=24`

@@ -4,13 +4,9 @@
       "command": "npx",
       "args": ["-y", "mcp-remote@latest", "https://docs.mcp.cloudflare.com/mcp"]
     },
-    "cloudflare-graphql": {
+    "cloudflare": {
       "command": "npx",
-      "args": [
-        "-y",
-        "mcp-remote@latest",
-        "https://graphql.mcp.cloudflare.com/mcp"
-      ]
+      "args": ["-y", "mcp-remote@latest", "https://mcp.cloudflare.com/mcp"]
     }
   }
 }

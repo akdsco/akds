@@ -78,13 +78,15 @@ under `output: "export"`). The deployable artifact for any app is always
 
 Each app is its own Cloudflare Pages project, built from this one repo:
 
-- **apps/portfolio → akds.dev** (existing project `akds-portfolio-2026`): build
-  command `npm run build -w apps/portfolio`, output dir `apps/portfolio/build`,
-  `NODE_VERSION=24`, plus the analytics token env. See `apps/portfolio/CLAUDE.md`.
-- **apps/design → akdsdesign.uk** (deferred): build `npm run build -w apps/design`,
-  output `apps/design/build`. See `apps/design/CLAUDE.md`.
+- **apps/portfolio → akds.dev** (project `akds-portfolio`): build command
+  `npm run build -w apps/portfolio`, output dir `apps/portfolio/build`,
+  `NODE_VERSION=24`. See `apps/portfolio/CLAUDE.md`.
+- **apps/design → akdsdesign.uk** (project `akds-design`): build
+  `npm run build -w apps/design`, output `apps/design/build`, `NODE_VERSION=24`.
+  See `apps/design/CLAUDE.md`.
 
-Production only moves when a merge to `main` lands; branches never deploy.
+Production only moves when a merge to `main` lands. Branches and PRs get Pages
+preview URLs only.
 
 ## ⚠ Next.js 16 — likely newer than your training data
 

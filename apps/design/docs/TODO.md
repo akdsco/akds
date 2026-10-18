@@ -35,8 +35,9 @@ Pending ideas and work, kept out of CLAUDE.md so that file stays rules, not stat
 ## Deploy (do last)
 
 - [ ] Register **akdsdesign.uk** and wire the custom domain. Last step, not now.
-- [ ] **Near-term:** deploy to Cloudflare Pages on the generic `*.pages.dev`
+- [x] **Near-term:** deploy to Cloudflare Pages on the generic `*.pages.dev`
       domain so there is a live preview, before the real domain is bought.
+      Done: project `akds-design` builds from `main` (`akds-design.pages.dev`).
       Run locally (`npm run dev`) until then.
 
 ## Content to chisel (owner-supplied)
