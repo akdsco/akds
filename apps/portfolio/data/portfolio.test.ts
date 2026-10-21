@@ -154,3 +154,32 @@ describe("identity positioning (AI Engineer)", () => {
     expect(source).not.toMatch(FULL_STACK);
   });
 });
+
+// TB-213: the code factory's cost saving is on the CV (master-cv.yml
+// b-growthnation-codefactory) and in the About intro; the GrowthNation entry in
+// the timeline must carry the same metric so the two never tell different stories.
+describe("GrowthNation code factory", () => {
+  test("the experience entry states the code factory's cost saving", () => {
+    const role = experience.find((r) => r.company === "GrowthNation");
+    const codeFactory = role?.highlights.find((h) =>
+      h.includes("code factory"),
+    );
+
+    expect(codeFactory).toMatch(/cutting engineering cost by more than 30%/);
+    expect(about.paragraphs.join(" ")).toMatch(/more than 30%/);
+  });
+
+  // Highlights read as the order the work happened: the initial build, then the
+  // code factory, then bug triage, then (after the pivot) the Proof Library.
+  test("highlights are chronological, code factory as its own bullet", () => {
+    const highlights =
+      experience.find((r) => r.company === "GrowthNation")?.highlights ?? [];
+    const at = (needle: string) =>
+      highlights.findIndex((h) => h.includes(needle));
+
+    expect(at("user auth")).toBe(0);
+    expect(at("code factory")).toBe(1);
+    expect(at("bug-triage")).toBe(2);
+    expect(at("Proof Library")).toBe(3);
+  });
+});
