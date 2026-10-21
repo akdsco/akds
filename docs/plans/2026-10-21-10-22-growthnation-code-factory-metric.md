@@ -42,21 +42,17 @@ Current highlight (also clunky: "SME's", run-on, two ideas in one bullet):
 
 ## Plan
 
-Split the first highlight into two bullets, one idea each:
-
-1. `Joined during the initial product build (AIO/SEO tooling for SMEs and agencies) and built user auth and custom integrations.`
-2. `Co-built the "code factory" workflow with the CTO: skills, plans and automated gates that let a designer and a junior dev ship straight to production, cutting engineering cost by more than 30%.`
-
-Phrasing mirrors the CV bullet and the About paragraph ("more than 30%").
+Owner decision: keep the existing highlight verbatim (the site carries as much
+detail as possible; no split, no rewording) and only append
+`, cutting engineering cost by more than 30%`. Matches the CV metric and the
+About paragraph ("more than 30%").
 
 ## Increments (test-first)
 
 1. test (`data/portfolio.test.ts`): GrowthNation has a highlight mentioning the
-   code factory that states `more than 30%` and names the designer + junior dev
-   (B1, B2) and contains no em/en dash → red against current copy.
-   impl: split + rewrite the highlight as above → green. Existing
-   `experience.test.tsx` "renders every highlight" counts dynamically, so stays
-   green. One commit.
+   code factory that states `cutting engineering cost by more than 30%`, and the
+   About intro carries the same figure (B1, B2) → red against current copy.
+   impl: append the metric to the existing highlight → green. One commit.
 
 Gate: `npm run lint && npm run typecheck && npm run test` (root fan-out),
 `npm run format:check`.

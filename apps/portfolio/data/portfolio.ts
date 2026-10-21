@@ -571,7 +571,7 @@ export const experience: WorkExperience[] = [
     summary:
       "Founding-team engineer on a social-proof OS for sales teams, through a CEO-driven pivot.",
     highlights: [
-      'Joined during the initial product build for marketing function, helping SME\'s and Agencies streamline their AIO/SEO tactics, I built user auth, custom integrations and setup "code factory" workflow with the CTO to enable build contributions from all team members (product/design)',
+      'Joined during the initial product build for marketing function, helping SME\'s and Agencies streamline their AIO/SEO tactics, I built user auth, custom integrations and setup "code factory" workflow with the CTO to enable build contributions from all team members (product/design), cutting engineering cost by more than 30%',
       "Built the Proof Library: ingestion (domain scrape, file upload, AI-vision screenshot extraction), dashboard with coverage matrix, and MCP/agentic access.",
       "Server-side LLM tagging, every new quote, stat, or case study was tagged against the workspace's ICPs and pain points before save returns, with fan-out re-tag on edits.",
       "Co-created an autonomous AI bug-triage system that performs root-cause analysis (temporal ordering, source prioritisation, fingerprinting, cascade detection) and opens clean fix PRs with plans and implementations on its own.",
