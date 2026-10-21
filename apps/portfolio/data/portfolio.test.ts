@@ -168,4 +168,18 @@ describe("GrowthNation code factory", () => {
     expect(codeFactory).toMatch(/cutting engineering cost by more than 30%/);
     expect(about.paragraphs.join(" ")).toMatch(/more than 30%/);
   });
+
+  // Highlights read as the order the work happened: the initial build, then the
+  // code factory, then bug triage, then (after the pivot) the Proof Library.
+  test("highlights are chronological, code factory as its own bullet", () => {
+    const highlights =
+      experience.find((r) => r.company === "GrowthNation")?.highlights ?? [];
+    const at = (needle: string) =>
+      highlights.findIndex((h) => h.includes(needle));
+
+    expect(at("user auth")).toBe(0);
+    expect(at("code factory")).toBe(1);
+    expect(at("bug-triage")).toBe(2);
+    expect(at("Proof Library")).toBe(3);
+  });
 });

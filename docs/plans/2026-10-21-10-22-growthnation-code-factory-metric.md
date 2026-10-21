@@ -57,6 +57,11 @@ About paragraph ("more than 30%").
 Gate: `npm run lint && npm run typecheck && npm run test` (root fan-out),
 `npm run format:check`.
 
+2. Owner follow-up: split the code factory into its own bullet and order the
+   GrowthNation highlights chronologically (initial build incl. WordPress
+   integration + auth → code factory → bug triage → pivot → Proof Library →
+   LLM tagging). test: index order of the bullets → red; impl: reorder → green.
+
 ## Plan-quality gate
 
 - Reality recon: N/A (pure copy change inside a known codebase; CV source read
